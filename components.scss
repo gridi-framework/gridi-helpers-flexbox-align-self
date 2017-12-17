@@ -1,5 +1,13 @@
 @each $class, $value in $gridi-helpers-flexbox-alignment-self-classes {
     .#{$class} {
-        @include align-self($value);
+        @if is-map($value) {
+            $settings: map-get($value, settings);
+            @if not is-map($settings) {
+                $settings: ();
+            }
+            @include align-self(map-get($value, value), $settings);
+        } @else {
+            @include align-self($value);
+        }
     }
 }
